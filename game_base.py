@@ -1,11 +1,11 @@
-###   Python Simple Game Skeleton   ###
- #       By Jacob Mendelowitz        #
+# Python Simple 2D Game Skeleton
+# By Jacob Mendelowitz
 
 from tkinter import *
 
 class Game:
-    TITLE = "My Game" # Title at the top bar of the window.
-    ICON = "_images/icon.ico" # Icon image in the top left corner of the window.
+    TITLE = "My Game" # String of the title at the top bar of the window.
+    ICON = None # Path to the icon image in the top left corner of the window.
     SCREEN_WIDTH = 600 # Width of the window.
     SCREEN_HEIGHT = 450 # Height of the window.
     FRAME_RATE = 30 # Frames per second refresh speed of the game.
@@ -61,10 +61,8 @@ class ImageDatabase:
     def __init__(self):
         """ A database to hold all the images.
             Load in new images to the game by inserting them below in the
-            same form as the commented example below. When inputting an image
-            name, always put PATH + before it to pull it from the _images
-            folder. """
-        PATH = "_images/"
+            same form as the commented example below. """
+        PATH = "res/images/"
         self.images = {}
         # self.images["Example"] = PhotoImage(file = PATH + "example.gif")
     def get_image(self, name):
