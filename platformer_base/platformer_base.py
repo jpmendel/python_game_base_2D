@@ -4,6 +4,12 @@
 from tkinter import *
 from src.background import *
 
+""" A simple demonstration of a side scrolling platformer game. The player is
+    able to move left and right, as well as jump. As the player moves in either
+    direction, the map will scroll with the player until the edges of the map
+    are reached. If the player jumps, they will be affected by gravity until
+    they land on a solid tile. """
+
 class Game:
     TITLE = "Platformer Example"
     ICON = "res/icon.ico"
@@ -15,11 +21,13 @@ class Game:
     def __init__(self, window):
         self.window = window
         self.background = Background("res/map.txt")
-        
+
     def render(self):
+        """ Renders the game on the screen. """
         self.background.render(self.window)
 
     def update(self):
+        """ Updates all aspects of the game. """
         self.background.update()
 
     def mouse_motion(self, x_pos, y_pos):
@@ -30,6 +38,8 @@ class Game:
         pass
 
     def key_pressed(self, character, symbol):
+        """ Handles key input. Use the 'w' key to jump, 'a' key to move left
+            and 'd' key to move right. """
         if character == "w":
             if self.background.player.jump_state == Constants.NOT_JUMPING:
                 self.background.player.collision[Constants.DOWN] = False
@@ -42,6 +52,7 @@ class Game:
             self.background.player.move_state[Constants.LEFT] = False
 
     def key_released(self, character, symbol):
+        """ Handles key release events. """
         if character == "w":
             if self.background.player.jump_state == Constants.RISING:
                 self.background.player.jump_state = Constants.FALLING

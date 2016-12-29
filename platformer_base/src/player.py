@@ -4,6 +4,8 @@ from tkinter import *
 from .entity import *
 from .constants import *
 
+""" A class to represent the player that can be controlled by the user. """
+
 class Player(Entity):
     def __init__(self, x, y):
         Entity.__init__(self, x, y)
@@ -18,6 +20,7 @@ class Player(Entity):
                           Constants.LEFT:False, Constants.RIGHT:False}
 
     def draw(self, window):
+        """ Draws the player on the screen. """
         if self.visible:
             window.create_rectangle(self.pos.x - Constants.TILE_SIZE / 2, self.pos.y - Constants.TILE_SIZE / 2,
             self.pos.x + Constants.TILE_SIZE / 2, self.pos.y + Constants.TILE_SIZE / 2, fill = "blue", outline = "blue")

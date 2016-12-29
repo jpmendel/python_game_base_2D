@@ -7,6 +7,10 @@ from .player import *
 from .sprite import *
 from .constants import *
 
+""" The background of a single level in the game. Contains a 2D array of
+    Sprites that represent the map the player interacts with. The background
+    also contains the player, and manages the player's movement. """
+
 class Background(Entity):
     def __init__(self, map_file):
         Entity.__init__(self, -Constants.TILE_SIZE + 1, 0)
@@ -16,14 +20,17 @@ class Background(Entity):
         self.player = Player(200, 280)
 
     def render(self, window):
+        """ Renders the background on the screen. """
         self.draw_map(window)
         self.player.draw(window)
 
     def update(self):
+        """ Updates the status of the entities on the background. """
         self.player_move()
         self.player_jump()
 
     def draw_map(self, window):
+        """ Draws each of the tiles currently visible on the map. """
         for y in range(len(self.tiles)):
             for x in range(len(self.tiles[0])):
                 if self.pos.x + (x * Constants.TILE_SIZE) > (-2 * Constants.TILE_SIZE) \
@@ -32,6 +39,8 @@ class Background(Entity):
                     self.pos.y + (y * Constants.TILE_SIZE))
 
     def generate_map(self, map_file):
+        """ Generates a 2D array of tiles from a whitespace-delimited text file
+            and returns the array. """
         open_map_file = open(map_file, "r")
         file_data = open_map_file.readlines()
         open_map_file.close()
@@ -50,6 +59,8 @@ class Background(Entity):
         return map_sprites
 
     def get_sprite(self, sprite_id):
+        """ Gets a Sprite object based on a given sprite_id read from the map
+            file. """
         if sprite_id == Sprite.NONE:
             return Sprite(sprite_id, False, False, False)
         elif sprite_id == Sprite.BLOCK:
@@ -59,6 +70,7 @@ class Background(Entity):
         return Sprite(Sprite.ERROR, False, False, False)
 
     def player_move(self):
+        """ Handles motion of the map and player. """
         if self.player.visible:
             if self.player.move_state[Constants.RIGHT]:
                 if (not self.player.collision[Constants.RIGHT]) \
@@ -80,6 +92,7 @@ class Background(Entity):
             self.player_collision()
 
     def update_pos(self):
+        """ Updates the position of the map and player after movement. """
         if self.pos.x > -Constants.TILE_SIZE:
             self.player.pos.x -= self.vel.x
             if self.player.pos.x < Constants.TILE_SIZE / 2:
@@ -98,6 +111,7 @@ class Background(Entity):
             self.pos.x += self.vel.x
 
     def player_collision(self):
+        """ Checks collisions between the player and any solid tiles. """
         bx = int((self.player.pos.x - self.pos.x) / Constants.TILE_SIZE)
         by = int((self.player.pos.y - self.pos.y) / Constants.TILE_SIZE)
         up = int((self.player.pos.y - self.pos.y) / Constants.TILE_SIZE)
@@ -133,6 +147,7 @@ class Background(Entity):
             self.player.collision[Constants.RIGHT] = False
 
     def player_jump(self):
+        """ Handles jumping and gravity of the player. """
         if self.player.visible:
             if self.player.jump_state == Constants.RISING:
                 if self.player.vel.y < self.player.max_y_speed:
