@@ -56,21 +56,6 @@ class Game:
             ("Up", "Down", "Left", "Right", "space", etc.) """
         pass
 
-
-class ImageDatabase:
-    def __init__(self):
-        """ A database to hold all the images.
-            Load in new images to the game by inserting them below in the
-            same form as the commented example below. """
-        PATH = "res/images/"
-        self.images = {}
-        # self.images["Example"] = PhotoImage(file = PATH + "example.gif")
-    def get_image(self, name):
-        """ Use this to call an image from the database.
-            Simply put: database.get_image("ImgName") to retrieve the image. """
-        return self.images[name]
-
-
 ##############################################################################
 
 ############# SETUP CODE AND HELPER FUNCTIONS BELOW THIS LINE ################
@@ -114,7 +99,6 @@ def init():
     """ Sets up everything important. """
     global tk
     global game
-    global database
     tk = Tk() # Makes the tk object into the window application.
     canvas = Canvas(tk, width=Game.SCREEN_WIDTH, height=Game.SCREEN_HEIGHT)
     canvas.pack() # Adds a canvas for drawing on the window.
@@ -130,7 +114,6 @@ def init():
         tk.bind("<KeyPress>", key_pressed) # Checks for any key press.
         tk.bind("<KeyRelease>", key_released) # Checks for any key release.
     game = Game(canvas)
-    database = ImageDatabase()
 
 def run():
     """ Runs the game. """
